@@ -23,7 +23,7 @@ impl Handler for Client {
      * Only called after the handshake was successful
      */
     fn on_open(&mut self, _: Handshake) -> Result<()> {
-        //println!("Client connected!");
+        println!("successfully connected!");
         self.out.send("hello")
     }
 
@@ -42,8 +42,8 @@ fn main() {
     address = format!("ws://{}:{}", touchbar.ip, touchbar.port);
     println!("Address for the touchbar is: {}", address);
 
-    //connect to the server
-    connect(address, |out| Client {out: out} ).unwrap()
+    //connect to the first server
+    connect(address, |out| Client {out: out} ).unwrap();
 
 }
 
