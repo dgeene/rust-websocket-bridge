@@ -6,13 +6,32 @@
 extern crate ws;
 
 //use ws::listen;
-use ws::{connect, CloseCode};
+use ws::{connect, CloseCode, Handler, Sender, Handshake, Result, Message};
 
+struct Client {
+    out: Sender,
+}
 struct Connection {
     ip: String,
     port: String,
 }
 
+
+impl Handler for Client {
+
+    /*
+     * Only called after the handshake was successful
+     */
+    fn on_open(&mut self, _: Handshake) -> Result<()> {
+        //println!("Client connected!");
+        self.out.send("hello")
+    }
+
+    fn on_message(&mut self, msg: Message) -> Result<()> {
+        println!("got message: {}", msg);
+        self.out.close(CloseCode::Normal)
+    }
+}
 
 fn main() {
     let touchbar = Connection {
@@ -24,15 +43,7 @@ fn main() {
     println!("Address for the touchbar is: {}", address);
 
     //connect to the server
-    connect(address, |out| {
-        out.send("yo waddup").unwrap();
-
-        move |msg| {
-            println!("got message: {}", msg);
-            out.close(CloseCode::Normal)
-        }
-    }).unwrap()
-
+    connect(address, |out| Client {out: out} ).unwrap()
 
 }
 
