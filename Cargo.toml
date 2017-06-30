@@ -1,0 +1,7 @@
+[package]
+name = "eddie-proxy"
+version = "0.1.0"
+authors = ["David Geene <david_geene@bose.com>"]
+
+[dependencies]
+ws = "*"
