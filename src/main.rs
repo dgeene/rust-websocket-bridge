@@ -41,7 +41,8 @@ impl Handler for Client {
 
 fn main() {
     // load configs
-    config::load_config();
+    let foo = config::load_config();
+    println!("{:#?}", foo);
 
 
     let touchbar = Connection {
