@@ -3,16 +3,13 @@
  * combining their  messages into one ws connection for a
  * client to consume
  */
-extern crate toml;
-extern crate serde;
 extern crate ws;
 
 #[macro_use]
 extern crate serde_derive;
 
+
 //use ws::listen;
-use std::io::prelude::*;
-use std::fs::File;
 use ws::{connect, CloseCode, Handler, Sender, Handshake, Result, Message};
 
 mod config;
@@ -23,15 +20,6 @@ struct Client {
 struct Connection {
     ip: String,
     port: String,
-}
-#[derive(Debug, Deserialize)]
-struct Config {
-    clients: Option<Vec<ClientConfig>>,
-}
-#[derive(Debug, Deserialize)]
-struct ClientConfig {
-    ip: Option<String>,
-    port: Option<String>,
 }
 
 
@@ -52,16 +40,8 @@ impl Handler for Client {
 }
 
 fn main() {
-    config::load_config();
     // load configs
-    let mut file = File::open("./config.toml").expect("Unable to open the file");
-    let mut contents = String::new();
-    file.read_to_string(&mut contents).expect("Unable to read the file");
-    //println!("{}", contents);
-    let decoded: Config = toml::from_str(&contents).unwrap();
-    //let client1 = decoded.clients;
-    println!("{:#?}", decoded);
-    //println!("client: {}", client1.ip.unwrap());
+    config::load_config();
 
 
     let touchbar = Connection {
