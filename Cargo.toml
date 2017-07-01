@@ -4,4 +4,7 @@ version = "0.1.0"
 authors = ["David Geene <david_geene@bose.com>"]
 
 [dependencies]
+serde = "1.0.9"
+serde_derive = "1.0.9"
+toml = "0.4"
 ws = "*"
