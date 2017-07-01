@@ -42,17 +42,19 @@ impl Handler for Client {
 fn main() {
     // load configs
     let foo = config::load_config();
-    println!("{:#?}", foo.clients.unwrap()[0].ip);
-    //println!("{}", foo[0]);
+    let clients = foo.clients.unwrap(); //TODO use match to error check
+    let ip: Option<String> = clients[0].ip;
+   // clients = "foo";
+    println!("{:?}", ip);
+
+
+
+    //TODO
+    //let ref ip = &clients[0];
     //let mut address = String::new();
-    //address = format!("ws://{}:{}", touchbar.ip, touchbar.port);
-
-
-    let touchbar = Connection {
-        ip: "192.168.1.129".to_string(),
-        port: "8001".to_string(),
-    };
+    //address = format!("ws://{}:", ip);
     //println!("Address for the touchbar is: {}", address);
+
 
     //connect to the first server
     //connect(address, |out| Client {out: out} ).unwrap();

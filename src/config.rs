@@ -2,6 +2,7 @@ extern crate toml;
 extern crate serde;
 
 
+use std::fmt;
 use std::io::prelude::*;
 use std::fs::File;
 
@@ -13,6 +14,15 @@ pub struct Config {
 pub struct ClientConfig {
     pub ip: Option<String>,
     pub port: Option<String>,
+}
+
+// TODO I want the damn value
+impl fmt::Display for ClientConfig {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        //let mut ip = String::new();
+        //ip = self.ip.take();
+        write!(f, "({:?}:{:?})", self.ip, self.port)
+    }
 }
 
 /*
