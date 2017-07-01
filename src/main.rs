@@ -15,6 +15,8 @@ use std::io::prelude::*;
 use std::fs::File;
 use ws::{connect, CloseCode, Handler, Sender, Handshake, Result, Message};
 
+mod config;
+
 struct Client {
     out: Sender,
 }
@@ -50,6 +52,7 @@ impl Handler for Client {
 }
 
 fn main() {
+    config::load_config();
     // load configs
     let mut file = File::open("./config.toml").expect("Unable to open the file");
     let mut contents = String::new();
