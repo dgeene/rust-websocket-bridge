@@ -7,12 +7,12 @@ use std::fs::File;
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
-    clients: Option<Vec<ClientConfig>>,
+    pub clients: Option<Vec<ClientConfig>>,
 }
 #[derive(Debug, Deserialize)]
-struct ClientConfig {
-    ip: Option<String>,
-    port: Option<String>,
+pub struct ClientConfig {
+    pub ip: Option<String>,
+    pub port: Option<String>,
 }
 
 /*
