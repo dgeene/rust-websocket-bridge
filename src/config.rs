@@ -2,7 +2,6 @@ extern crate toml;
 extern crate serde;
 
 
-use std::fmt;
 use std::io::prelude::*;
 use std::fs::File;
 
@@ -12,18 +11,10 @@ pub struct Config {
 }
 #[derive(Debug, Deserialize)]
 pub struct ClientConfig {
-    pub ip: Option<String>,
-    pub port: Option<String>,
+    pub ip: String,
+    pub port: String,
 }
 
-// TODO I want the damn value
-impl fmt::Display for ClientConfig {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        //let mut ip = String::new();
-        //ip = self.ip.take();
-        write!(f, "({:?}:{:?})", self.ip, self.port)
-    }
-}
 
 /*
  * Load the configuration file from the root of the project.
@@ -33,6 +24,6 @@ pub fn load_config() -> Config {
     let mut file = File::open("./config.toml").expect("Unable to open the file");
     let mut contents = String::new();
     file.read_to_string(&mut contents).expect("Unable to read the file");
-    let decoded: Config = toml::from_str(&contents).unwrap();
+    let decoded: Config = toml::from_str(&contents).unwrap();// TODO use match here and handle an empty config
     return decoded;//TODO find a way to remove
 }

@@ -17,10 +17,6 @@ mod config;
 struct Client {
     out: Sender,
 }
-struct Connection {
-    ip: String,
-    port: String,
-}
 
 
 impl Handler for Client {
@@ -42,22 +38,25 @@ impl Handler for Client {
 fn main() {
     // load configs
     let foo = config::load_config();
-    let clients = foo.clients.unwrap(); //TODO use match to error check
-    let ip: Option<String> = clients[0].ip;
-   // clients = "foo";
-    println!("{:?}", ip);
+    let mut clients = foo.clients.expect("No clients foud in config file");
+    let client_1 = clients.remove(0);
+    //TODO use match to error check
+    /* let clients = match foo.clients {
+        ClientConfig {ip: ip., port: port} => println!("{:?}", ip),
+        //Some(mut x) => x.remove(0),
+        None => println!("No clients defined in config file"),
+    };
+    */
 
 
 
-    //TODO
-    //let ref ip = &clients[0];
-    //let mut address = String::new();
-    //address = format!("ws://{}:", ip);
-    //println!("Address for the touchbar is: {}", address);
+    let mut address = String::new();
+    address = format!("ws://{}:{}", client_1.ip, client_1.port);
+    println!("Address for the touchbar is: {}", address);
 
 
     //connect to the first server
-    //connect(address, |out| Client {out: out} ).unwrap();
+    connect(address, |out| Client {out: out} ).unwrap();
 
 }
 
