@@ -24,6 +24,5 @@ pub fn load_config() -> Config {
     let mut file = File::open("./config.toml").expect("Unable to open the file");
     let mut contents = String::new();
     file.read_to_string(&mut contents).expect("Unable to read the file");
-    let decoded: Config = toml::from_str(&contents).unwrap();// TODO use match here and handle an empty config
-    return decoded;//TODO find a way to remove
+    toml::from_str(&contents).unwrap()// TODO use match here and handle an empty config
 }
